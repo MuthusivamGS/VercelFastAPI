@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Images</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        img {
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body onload="loadAllImages()">
+    <h1>All Uploaded Images</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Preview</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Group</th>
+            </tr>
+        </thead>
+        <tbody id="imageTableBody"></tbody>
+    </table>
+    <script>
+        async function loadAllImages() {
+            try {
+                const res = await fetch("/get-all-images");
+                const images = await res.json();
+                const tbody = document.getElementById("imageTableBody");
+                tbody.innerHTML = "";
+                images.forEach(img => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${img.id}</td>
+                        <td><img src="/images/${img.id}" alt="${img.name}" /></td>
+                        <td>${img.name}</td>
+                        <td>${img.description || ""}</td>
+                        <td>${img.group || ""}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (err) {
+                console.error("Error fetching images:", err);
+            }
+        }
+    </script>
+</body>
+</html>

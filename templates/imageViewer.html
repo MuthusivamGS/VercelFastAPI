@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Viewer</title>
+</head>
+<body>
+    <h2>View Image by ID</h2>
+    <input type="number" id="imageIdInput" placeholder="Enter Image ID" />
+    <button onclick="loadImage()">Load Image</button>
+    <div id="imageContainer">
+        <img id="imageDisplay" src="" alt="Image will appear here" style="max-width: 500px; margin-top: 20px;" />
+        <p></p>
+    </div>
+    <script>
+        function loadImage() {
+            const imageId = document.getElementById("imageIdInput").value;
+            const imgTag = document.getElementById("imageDisplay");
+            imgTag.src = `/images/${imageId}`;  // FastAPI route
+        }
+    </script>
+</body>
+</html>
